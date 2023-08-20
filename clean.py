@@ -2,15 +2,16 @@ import os
 
 FILES_FOR_CLEAN_EXTENTIONS = ('.c', '.h')
 
-TEMP_FILE_PREFIX = "temp_"
+TEMP_FILE_EXTENTION = ".temp"
 LINE_FOR_REMOVE_TEMPLATE = "/* USER CODE "
 
-def clear_file(filename):
-    temp_file_name = TEMP_FILE_PREFIX + filename 
-    f_temp = open(temp_file_name, 'w', encoding='UTF-8')
-    
+def clean_file(file_path):
+    """Removes lines that contain pattern"""
+    temp_file_path = file_path + TEMP_FILE_EXTENTION
+    f_temp = open(temp_file_path, 'w', encoding='UTF-8')
+
     lines_counter = 0
-    with open(filename, 'r', encoding='UTF-8') as f:
+    with open(file_path, 'r', encoding='UTF-8') as f:
         for line in f:
             if line.find(LINE_FOR_REMOVE_TEMPLATE) != -1:
                 lines_counter += 1
@@ -20,8 +21,8 @@ def clear_file(filename):
 
     f_temp.close()
 
-    os.remove(filename)
-    os.rename(temp_file_name, filename)
+    os.remove(file_path)
+    os.rename(temp_file_path, file_path)
 
     return lines_counter
 
@@ -43,14 +44,18 @@ def main():
     print(f'Current directory path: {generic_path}')
 
     files = get_files_for_clean(generic_path)
-    for path in files:
-        print(path)
+    
+    modified_files = 0
+    for file_path in files:
+        removed_lines = clean_file(file_path)
+        if removed_lines:
+            print(f'From {file_path} removed {removed_lines} lines')
+            modified_files += 1
 
-    filename = 'some.c'
-
-    removed_lines = clear_file(filename)
-    if removed_lines:
-        print(f'From {filename} removed {removed_lines} lines')
+    if modified_files:
+        print(f'Modified {modified_files} files in project')
+    else:
+        print(f'Nothing to modify in project')
 
 if __name__ == '__main__':
     main()
