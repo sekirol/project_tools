@@ -6,17 +6,28 @@ TEMP_FILE_EXTENTION = ".temp"
 LINE_FOR_REMOVE_TEMPLATE = "/* USER CODE "
 
 def clean_file(file_path):
-    """Removes lines that contain pattern"""
+    """Removes lines that contain pattern and empty lines after them"""
     temp_file_path = file_path + TEMP_FILE_EXTENTION
     f_temp = open(temp_file_path, 'w', encoding='UTF-8')
 
     lines_counter = 0
+
+    remove_empty_line_flag = False
     with open(file_path, 'r', encoding='UTF-8') as f:
         for line in f:
+            if remove_empty_line_flag:
+                remove_empty_line_flag = False
+
+                if line == "\n":            
+                    lines_counter += 1
+                    continue
+
             if line.find(LINE_FOR_REMOVE_TEMPLATE) != -1:
+                remove_empty_line_flag = True
+                
                 lines_counter += 1
                 continue
-
+            
             f_temp.write(f'{line}')
 
     f_temp.close()
