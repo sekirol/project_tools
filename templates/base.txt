@@ -6,8 +6,22 @@
   * \brief     {{ description }}
   *
   */
+
+{% if include_guard %}
+#ifndef {{ include_guard }}
+#define {{ include_guard }}
+{% endif %}
+
 {% for separator in separators %}
 /******************************************************************************
- * {{ separator }}
+ * {{ separator.upper() }}
  ******************************************************************************/
+{% if include_header and separator == 'includes' %}
+#include "{{ include_header }}"
+{% endif %}
+
 {% endfor %}
+
+{% if include_guard %}
+#endif /* {{ include_guard }} */
+{% endif %}

@@ -1,22 +1,24 @@
 {
     "author_name": "Sergei Kirikeza",
     "description_template": "TODO: Add file description",
-    "source_separators": [
-        "INCLUDES",
-        "DEFINES",
-        "PRIVATE TYPES",
-        "PRIVATE DATA",
-        "PUBLIC DATA",
-        "EXTERNAL DATA",
-        "PRIVATE FUNCTION PROTOTYPES",
-        "EXTERNAL FUNCTION PROTOTYPES",
-        "PRIVATE FUNCTIONS",
-        "PUBLIC FUNCTIONS"
-    ],
-    "header_separators": [
-        "INCLUDES",
-        "DEFINES",
-        "PUBLIC TYPES",
-        "PUBLIC FUNCTION PROTOTYPES"
-    ]
+    "separators": {
+        "source": [
+            "includes",
+            "defines",
+            "private types",
+            "private data",
+            "public data",
+            "external data",
+            "private function prototypes",
+            "external function prototypes",
+            "private functions",
+            "public functions"
+            ],
+        "header": [
+            "includes",
+            "defines",
+            "public types",
+            "public function prototypes"
+        ]
+    }
 }
